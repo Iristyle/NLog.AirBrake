@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NLog.Targets;
+using SharpBrake;
 
 namespace NLog.AirBrake
 {
@@ -21,21 +22,19 @@ namespace NLog.AirBrake
     }
 
     /// <summary>
-    /// Gets or sets the host value. This property is set in the nlog config file.
-    /// </summary>
-    public string Host { get; set; }
-
-    /// <summary>
     /// Writes logging event to the log target.
     /// </summary>
     /// <param name="logEvent">Logging event to be written out.</param>
     protected override void Write(LogEventInfo logEvent)
     {
-      string logMessage = this.Layout.Render(logEvent);
+      if (logEvent.Exception != null)
+      {
+        // TODO: can we send more information than just the exception?
 
-      // TODO: log message to AirBrake
-
-      base.Write(logEvent);
+        // This grabs the configuartion from the config file. We could also 
+        // provide properties on the target to accept configuration information.
+        logEvent.Exception.SendToAirbrake();
+      }
     }
   }
 }
