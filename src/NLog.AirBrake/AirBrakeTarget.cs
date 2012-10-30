@@ -19,17 +19,7 @@ namespace NLog.AirBrake
     /// </summary>
     public AirBrakeTarget()
     {
-      builder = new AirbrakeNoticeBuilder(new AirbrakeConfiguration());
     }
-
-    /// <summary>
-    /// Gets or sets the host value. This property is set in the nlog config file.
-    /// </summary>
-    public string Host { get; set; }
-
-
-    private readonly AirbrakeNoticeBuilder builder;
-
 
     /// <summary>
     /// Writes logging event to the log target.
@@ -37,18 +27,14 @@ namespace NLog.AirBrake
     /// <param name="logEvent">Logging event to be written out.</param>
     protected override void Write(LogEventInfo logEvent)
     {
-      string logMessage = this.Layout.Render(logEvent);
-
       if (logEvent.Exception != null)
       {
         // TODO: can we send more information than just the exception?
-        AirbrakeClient client = new AirbrakeClient(); // pull config from app.config
-        var notice = this.builder.Notice(logEvent.Exception);
+
+        // This grabs the configuartion from the config file. We could also 
+        // provide properties on the target to accept configuration information.
         logEvent.Exception.SendToAirbrake();
       }
-
-      // TODO: log message to AirBrake
-      base.Write(logEvent);
     }
   }
 }
