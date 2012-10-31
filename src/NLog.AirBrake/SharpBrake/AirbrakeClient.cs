@@ -7,13 +7,14 @@ using System.Text;
 //using Common.Logging;
 
 using SharpBrake.Serialization;
+using NLog.AirBrake;
 
 namespace SharpBrake
 {
     /// <summary>
     /// The client responsible for communicating exceptions to the Airbrake service.
     /// </summary>
-    public class AirbrakeClient
+    public class AirbrakeClient : IAirbrakeClient
     {
         private readonly AirbrakeNoticeBuilder builder;
         private readonly AirbrakeConfiguration configuration;
