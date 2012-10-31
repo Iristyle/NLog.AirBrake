@@ -1,11 +1,11 @@
 # NLog.AirBrake #
 
 An [NLog](http://nlog-project.org/) target that sends exception information to [AirBrake](https://airbrake.io/). We
-are using the [SharpBrake](https://github.com/asbjornu/SharpBrake) library to communicate with AirBrake.
+are using code from the [SharpBrake](https://github.com/asbjornu/SharpBrake) library to communicate with AirBrake.
 
 # Configuration #
 
-You need to configure two things for this to work: NLog and SharpBrake
+You need to configure two things for this to work: NLog and AirBrake
 
 ## NLog Configuration ##
 
@@ -26,7 +26,7 @@ Your NLog configuration should look something like this:
 	  </rules>
 	</nlog>
 
-## SharpBrake Configuration ##
+## AirBrake Configuration ##
 
 Your app.config file should look something like this:
 
