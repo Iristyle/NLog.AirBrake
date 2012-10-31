@@ -18,8 +18,20 @@ namespace NLog.AirBrake
     /// Creates an instance of the AirBrakeTarget class.
     /// </summary>
     public AirBrakeTarget()
+      :this(new AirbrakeClient())
     {
     }
+
+    /// <summary>
+    /// Used to override the client for unit testing purposes
+    /// </summary>
+    /// <param name="client"></param>
+    public AirBrakeTarget(IAirbrakeClient client)
+    {
+      this.Client = client;
+    }
+
+    private IAirbrakeClient Client { get; set; }
 
     /// <summary>
     /// Writes logging event to the log target.
@@ -33,7 +45,7 @@ namespace NLog.AirBrake
 
         // This grabs the configuartion from the config file. We could also 
         // provide properties on the target to accept configuration information.
-        logEvent.Exception.SendToAirbrake();
+        this.Client.Send(logEvent.Exception);
       }
     }
   }
