@@ -100,5 +100,5 @@ Task Init {
 
 Task Test -Depends Compile {
   # TODO: write some tests!
-  #Invoke-Xunit -Path $BuildOutDir #-ExcludeTraits @{"Category" = "Integration"}
+  Invoke-Xunit -Path $BuildOutDir #-ExcludeTraits @{"Category" = "Integration"}
 }
