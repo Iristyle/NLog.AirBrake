@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NLog.AirBrake")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("NLog adapter for AirBrake / Errbit")]
+[assembly: AssemblyDescription("Publish error notifications from NLog directly to AirBrake or an Errbit server.")]
 //[assembly: AssemblyConfiguration("")]
 //[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("NLog.AirBrake")]
