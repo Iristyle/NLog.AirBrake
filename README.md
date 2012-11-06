@@ -85,7 +85,12 @@ information can be found [here][net-encrypt]
 
 ## Release Notes
 
-#### 0.1.0.0 - Initial release
+#### 0.2 - .NET 3.5
+
+* Retargeted at .NET 3.5
+* Added missing NLog and NLog.config packages to nuspec as dependencies
+
+#### 0.1 - Initial release
 
 * It works!
 
