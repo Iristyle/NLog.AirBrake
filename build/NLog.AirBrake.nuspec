@@ -14,13 +14,18 @@
     <description>Publish error notifications from NLog directly to AirBrake or an Errbit server.</description>
     <releaseNotes>
         * 0.1.0.0 - Initial release
+        * 0.2.0.0 - Rebuilt for .NET 3.5
     </releaseNotes>
     <copyright>East Point Systems 2012 and contributors</copyright>
     <tags>NLog log error notification AirBrake Errbit</tags>
     <language>en-US</language>
   </metadata>
   <files>
-    <file src="NLog.AirBrake.dll" target="lib\net40" />
-    <file src="NLog.AirBrake.xml" target="lib\net40" />
+    <file src="NLog.AirBrake.dll" target="lib\net35" />
+    <file src="NLog.AirBrake.xml" target="lib\net35" />
   </files>
+  <dependencies>
+    <dependency id="NLog" />
+    <dependency id="NLog.Config" />
+  </dependencies>
 </package>
