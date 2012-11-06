@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLog.AirBrake", "NLog.AirBrake\NLog.AirBrake.csproj", "{2065F323-3AF7-4CA5-98A0-A4B7C060C3F5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLog.AirBrake.TestApp", "NLog.AirBrake.TestApp\NLog.AirBrake.TestApp.csproj", "{216EF26A-9EEA-49FC-8D4B-F627DC4769E8}"
@@ -18,6 +18,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLog.AirBrake.Tests", "..\tests\NLog.AirBrake.Tests\NLog.AirBrake.Tests.csproj", "{8CBADBA7-2D34-41A2-8A36-90DA06BF8BAA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{895B640D-25A2-4C42-8E7B-F55F3F40B14C}"
+	ProjectSection(SolutionItems) = preProject
+		version.props = version.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
