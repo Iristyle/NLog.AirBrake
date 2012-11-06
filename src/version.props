@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VersioningScheme>
+	<MajorVersion>0</MajorVersion>
+	<MinorVersion>1</MinorVersion>
+	<VersionCompany>East Point Systems</VersionCompany>
+	<VersionCompanyUrl>http://github.com/EastPoint/NLog.AirBrake/</VersionCompanyUrl>
+	<!-- Typically this value will be supplied by a build server like Jenkins -->
+	<!-- 
+	<BUILD_NUMBER>0</BUILD_NUMBER>
+	-->
+
+	<!-- Available variables for a custom layout are:
+		$(MajorVersion) - from this file
+		$(MinorVersion) - from this file
+		$(BUILD_NUMBER) - original number from build server / environment variable if available, otherwise 0, unless overriden in this file
+		$(Build) - BUILD_NUMBER truncated to last 3 digits
+		$(YearMonth) - yyMM
+		$(DayNumber) - dd
+		$(Year) - yyyy
+
+		$(BuildVersion) - $(YearMonth)
+		$(RevisionVersion) - $(DayNumber)$(Build)
+
+		$(VersionNumber) - $(MajorVersion).$(MinorVersion).$(BuildVersion).$(RevisionVersion)
+
+		Note that these are NOT proper MSBuild variables, and therefore
+		arbitrary variables will not resolve.  Only these whitelisted
+		variables will do anything.  All other strings, valid or not,
+		will be treated as plaintext.
+	-->
+
+	<!--
+	<AssemblyFileVersionLayout>$(MajorVersion).$(MinorVersion).$(BuildVersion).$(RevisionVersion)</AssemblyFileVersionLayout>
+	<AssemblyInformationalVersionLayout>$(MajorVersion).$(MinorVersion).$(BuildVersion).$(RevisionVersion)</AssemblyInformationalVersionLayout>
+	-->
+</VersioningScheme>
