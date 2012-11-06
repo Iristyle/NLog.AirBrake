@@ -103,8 +103,12 @@ Task Clean -Depends Init {
   "Removing old zips"
 
   #old cruft if it's hanging around
+  #old cruft if it's hanging around
   if (Test-Path $BuildOutDir)
-    { Remove-Item "$BuildOutDir\*.zip" }
+  {
+    Get-ChildItem $BuildOutDir |
+      Remove-Item -Include '*' -Recurse -Force -ErrorAction SilentlyContinue
+  }
 }
 
 Task Init {
