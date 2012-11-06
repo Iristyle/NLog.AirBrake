@@ -4,6 +4,19 @@ function Get-CurrentDirectory
   [IO.Path]::GetDirectoryName((Get-Content function:$thisName).File)
 }
 
+# HACK: this is a monkey patch used to create MSBuild friendly
+# output until Psake does something with
+# https://github.com/psake/psake/pull/34
+$originalResolveError = (Get-Item Function:\Resolve-Error).ScriptBlock
+
+function Resolve-Error
+{
+  $msg = &$originalResolveError $args
+  $msg += "Error PSAKE1: {0}: `n{1}" -f (Get-Date), (&$originalResolveError $args -Short)
+
+  return $msg
+}
+
 Properties {
   $currentDirectory = Get-CurrentDirectory
   $BuildOutDir = Join-Path $currentDirectory 'BuildArtifacts'
