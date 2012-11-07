@@ -14,7 +14,7 @@ namespace SharpBrake
     /// <summary>
     /// The client responsible for communicating exceptions to the Airbrake service.
     /// </summary>
-    public class AirbrakeClient : IAirbrakeClient
+    public class AirbrakeClient
     {
         private readonly AirbrakeNoticeBuilder builder;
         private readonly AirbrakeConfiguration configuration;

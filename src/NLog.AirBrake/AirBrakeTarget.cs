@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NLog.Targets;
 using SharpBrake;
+using SharpBrake.Serialization;
 
 namespace NLog.AirBrake
 {
@@ -18,7 +19,7 @@ namespace NLog.AirBrake
     /// Creates an instance of the AirBrakeTarget class.
     /// </summary>
     public AirBrakeTarget()
-      :this(new AirbrakeClient())
+      :this(new SharpbrakeClient(new AirbrakeClient(), new AirbrakeNoticeBuilder()))
     {
     }
 
@@ -26,12 +27,12 @@ namespace NLog.AirBrake
     /// Used to override the client for unit testing purposes
     /// </summary>
     /// <param name="client"></param>
-    public AirBrakeTarget(IAirbrakeClient client)
+    public AirBrakeTarget(ISharpbrakeClient client)
     {
-      this.Client = client;
+      this.SharpbrakeClient = client;
     }
 
-    private IAirbrakeClient Client { get; set; }
+    private ISharpbrakeClient SharpbrakeClient { get; set; }
 
     /// <summary>
     /// Writes logging event to the log target.
@@ -41,12 +42,34 @@ namespace NLog.AirBrake
     {
       if (logEvent.Exception != null)
       {
-        // TODO: can we send more information than just the exception?
+        AirbrakeNotice notice = this.SharpbrakeClient.BuildNotice(logEvent.Exception);
 
-        // This grabs the configuartion from the config file. We could also 
-        // provide properties on the target to accept configuration information.
-        this.Client.Send(logEvent.Exception);
+        // Override the notice message so we have the full exception
+        // message, including the messages of the inner exceptions.
+        // Also, include the log message, if it is set.
+        string exceptionMessage = BuildExceptionMessage(logEvent.Exception);
+        notice.Error.Message = !string.IsNullOrEmpty(logEvent.Message) ? logEvent.Message + " " + exceptionMessage : exceptionMessage;
+
+        this.SharpbrakeClient.Send(notice);
       }
     }
+
+    private string BuildExceptionMessage(Exception ex)
+    {
+      if (ex == null)
+      {
+        return string.Empty;
+      }
+
+      List<string> messages = new List<string>();
+      while (ex != null)
+      {
+        messages.Add(ex.GetType().Name + ": " + ex.Message);
+        ex = ex.InnerException;
+      }
+
+      return string.Join(" --> ", messages.ToArray());
+    }
+
   }
 }
