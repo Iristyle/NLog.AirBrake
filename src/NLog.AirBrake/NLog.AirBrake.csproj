@@ -60,14 +60,15 @@
       <DependentUpon>CroMagVersion.tt</DependentUpon>
     </Compile>
     <Compile Include="AirBrakeTarget.cs" />
+    <Compile Include="ISharpbrakeClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SharpbrakeClient.cs" />
     <Compile Include="SharpBrake\AirbrakeClient.cs" />
     <Compile Include="SharpBrake\AirbrakeConfiguration.cs" />
     <Compile Include="SharpBrake\AirbrakeNoticeBuilder.cs" />
     <Compile Include="SharpBrake\AirbrakeResponse.cs" />
     <Compile Include="SharpBrake\AirbrakeResponseError.cs" />
     <Compile Include="SharpBrake\Extensions.cs" />
-    <Compile Include="IAirbrakeClient.cs" />
     <Compile Include="SharpBrake\RequestEndEventArgs.cs" />
     <Compile Include="SharpBrake\RequestEndEventHandler.cs" />
     <Compile Include="SharpBrake\Serialization\AirbrakeError.cs" />
