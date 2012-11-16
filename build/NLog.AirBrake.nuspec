@@ -21,7 +21,6 @@
     <language>en-US</language>
     <dependencies>
       <dependency id="NLog" />
-      <dependency id="NLog.Config" />
     </dependencies>
   </metadata>
   <files>
