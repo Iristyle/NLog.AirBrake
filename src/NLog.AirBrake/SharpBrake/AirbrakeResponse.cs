@@ -1,12 +1,12 @@
 using System;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Xml;
 
 //using Common.Logging;
 
 using SharpBrake.Serialization;
+using System.Collections.Generic;
 
 namespace SharpBrake
 {
@@ -155,7 +155,7 @@ namespace SharpBrake
                     switch (reader.LocalName)
                     {
                         case "errors":
-                            this.errors = reader.BuildErrors().ToArray();
+                            this.errors = new List<AirbrakeResponseError>(reader.BuildErrors()).ToArray();
                             break;
 
                         case "notice":

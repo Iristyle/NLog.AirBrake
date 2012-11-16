@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.SessionState;
@@ -168,10 +167,10 @@ namespace SharpBrake
             var component = String.Empty;
             var action = String.Empty;
 
-            if ((notice.Error != null) && (notice.Error.Backtrace != null) && notice.Error.Backtrace.Any())
+            if ((notice.Error != null) && (notice.Error.Backtrace != null) && (notice.Error.Backtrace.Length > 0))
             {
                 // TODO: We should perhaps check whether the topmost back trace is in fact a Controller+Action by performing some sort of heuristic (searching for "Controller" etc.). @asbjornu
-                var backtrace = notice.Error.Backtrace.First();
+                var backtrace = notice.Error.Backtrace[0];
                 action = backtrace.Method;
                 component = backtrace.File;
             }
@@ -230,8 +229,8 @@ namespace SharpBrake
             }
 
             request.CgiData = cgiData.ToArray();
-            request.Params = parameters.Any() ? parameters.ToArray() : null;
-            request.Session = session.Any() ? session.ToArray() : null;
+            request.Params = parameters.Count > 0 ? parameters.ToArray() : null;
+            request.Session = session.Count > 0 ? session.ToArray() : null;
             notice.Request = request;
         }
 
@@ -307,12 +306,16 @@ namespace SharpBrake
                 return new AirbrakeVar[0];
             }
 
-            return from key in cookies.Keys.Cast<string>()
-                   where !String.IsNullOrEmpty(key)
-                   let cookie = cookies[key]
-                   let value = cookie != null ? cookie.Value : null
-                   where !String.IsNullOrEmpty(value)
-                   select new AirbrakeVar(key, value);
+            List<AirbrakeVar> airBrakeVars = new List<AirbrakeVar>();
+
+            foreach (String key in cookies.Keys)
+            {
+                HttpCookie cookie = cookies[key];
+                if (cookie == null || String.IsNullOrEmpty(cookie.Value)) { continue; }
+                airBrakeVars.Add(new AirbrakeVar(key, cookie.Value));
+            }
+
+            return airBrakeVars;
         }
 
 
@@ -323,12 +326,18 @@ namespace SharpBrake
                 //this.log.Debug(f => f("No form data to build vars from."));
                 return new AirbrakeVar[0];
             }
+            
+            List<AirbrakeVar> airBrakeVars = new List<AirbrakeVar>();
 
-            return from key in formData.AllKeys
-                   where !String.IsNullOrEmpty(key)
-                   let value = formData[key]
-                   where !String.IsNullOrEmpty(value)
-                   select new AirbrakeVar(key, value);
+            foreach (string key in formData.AllKeys)
+            {
+                String var = formData[key];
+                if (!String.IsNullOrEmpty(key))
+                {
+                    airBrakeVars.Add(new AirbrakeVar(key, var));
+                }
+            }
+            return airBrakeVars;
         }
 
 
@@ -340,12 +349,18 @@ namespace SharpBrake
                 return new AirbrakeVar[0];
             }
 
-            return from key in session.Keys.Cast<string>()
-                   where !String.IsNullOrEmpty(key)
-                   let v = session[key]
-                   let value = v != null ? v.ToString() : null
-                   where !String.IsNullOrEmpty(value)
-                   select new AirbrakeVar(key, value);
+            List<AirbrakeVar> airBrakeVars = new List<AirbrakeVar>();
+
+            foreach (string key in session.Keys)
+            {
+                String var = session[key] as String;
+                if (!String.IsNullOrEmpty(var))
+                {
+                    airBrakeVars.Add(new AirbrakeVar(key, var));
+                }
+            }
+
+            return airBrakeVars;
         }
     }
 }
