@@ -1,6 +1,5 @@
 using System;
 using System.Configuration;
-using System.Linq;
 using System.Web;
 
 namespace SharpBrake
@@ -27,7 +26,7 @@ namespace SharpBrake
             string[] values = ConfigurationManager.AppSettings.GetValues("Airbrake.AppVersion");
             
             if (values != null)
-                AppVersion = values.FirstOrDefault();
+                AppVersion = values[0];
         }
 
 

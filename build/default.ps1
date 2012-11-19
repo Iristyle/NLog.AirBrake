@@ -27,7 +27,9 @@ Task default -Depends Test, Package
 Task Compile -Depends Init,Clean {
   "Starting compilation process... "
 
+  #build .NET2 and .NET4 versions separately
   exec { msbuild build.proj }
+  exec { msbuild build.proj /p:TargetFrameworkVersion=v4.0 }
 }
 
 Task Package -Depends Compile, Test {
@@ -37,7 +39,7 @@ Task Package -Depends Compile, Test {
   Copy-Item $sourceNuspec -Destination $nuspecPath
 
   $nuspec = [Xml](Get-Content $nuspecPath)
-  $compiled = Join-Path $BuildOutDir 'NLog.AirBrake.dll'
+  $compiled = Join-Path $BuildOutDir 'v2.0\NLog.AirBrake.dll'
   $version = (Get-Command $compiled).FileVersionInfo.FileVersion
   $nuspec.package.metadata.version = $version
   $nuspec.Save($nuspecPath)
