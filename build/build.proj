@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectToBuild Include="../src/NLog.AirBrake.sln" Condition=" '$(TargetFrameworkVersion)' == 'v2.0' ">
-      <Properties>Configuration=$(Configuration);OutDir=$(BuildOutDir);</Properties>
+      <Properties>Configuration=$(Configuration);OutDir=$(BuildOutDir)</Properties>
     </ProjectToBuild>
     <ProjectToBuild Include="../src/NLog.AirBrake.sln" Condition=" '$(TargetFrameworkVersion)' == 'v4.0' ">
       <Properties>Configuration=$(Configuration);OutDir=$(BuildOutDir);TargetFrameworkVersion=$(TargetFrameworkVersion)</Properties>
