@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Xml.Serialization;
 
 namespace SharpBrake.Serialization
@@ -67,7 +66,7 @@ namespace SharpBrake.Serialization
         [XmlArrayItem("var")]
         public AirbrakeVar[] CgiData
         {
-            get { return this.cgiData != null && this.cgiData.Any() ? this.cgiData : null; }
+            get { return this.cgiData != null && this.cgiData.Length > 0 ? this.cgiData : null; }
             set { this.cgiData = value; }
         }
 
@@ -90,7 +89,7 @@ namespace SharpBrake.Serialization
         [XmlArrayItem("var")]
         public AirbrakeVar[] Params
         {
-            get { return this.parameters != null && this.parameters.Any() ? this.parameters : null; }
+            get { return this.parameters != null && this.parameters.Length > 0 ? this.parameters : null; }
             set { this.parameters = value; }
         }
 
@@ -104,7 +103,7 @@ namespace SharpBrake.Serialization
         [XmlArrayItem("var")]
         public AirbrakeVar[] Session
         {
-            get { return this.session != null && this.session.Any() ? this.session : null; }
+            get { return this.session != null && this.session.Length > 0 ? this.session : null; }
             set { this.session = value; }
         }
 

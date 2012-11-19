@@ -11,6 +11,8 @@ namespace SharpBrake
     /// </summary>
     public static class Extensions
     {
+        //.Net 2.0 is missing Func, so we define our own here for the TryGet method.
+        public delegate TResult Func<in T1, out TResult>(T1 arg1);
         /// <summary>
         /// Sends the <paramref name="exception"/> to Airbrake.
         /// </summary>

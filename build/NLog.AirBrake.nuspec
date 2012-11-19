@@ -15,6 +15,7 @@
     <releaseNotes>
         * 0.1.0.0 - Initial release
         * 0.2.0.0 - Rebuilt for .NET 3.5
+        * 0.4.0.0 - Builds both Frameworks .NET 2.0 and .NET 4.0
     </releaseNotes>
     <copyright>East Point Systems 2012 and contributors</copyright>
     <tags>NLog log error notification AirBrake Errbit</tags>
@@ -24,7 +25,9 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="NLog.AirBrake.dll" target="lib\net35" />
-    <file src="NLog.AirBrake.xml" target="lib\net35" />
+    <file src="v2.0\NLog.AirBrake.dll" target="lib\net20" />
+    <file src="v2.0\NLog.AirBrake.xml" target="lib\net20" />
+    <file src="v4.0\NLog.AirBrake.dll" target="lib\net40" />
+    <file src="v4.0\NLog.AirBrake.xml" target="lib\net40" />
   </files>
 </package>
