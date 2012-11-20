@@ -17,7 +17,7 @@ namespace SharpBrake
         /// Sends the <paramref name="exception"/> to Airbrake.
         /// </summary>
         /// <param name="exception">The exception to send to Airbrake.</param>
-        public static void SendToAirbrake(this Exception exception)
+        public static void SendToAirbrake(Exception exception)
         {
             var client = new AirbrakeClient();
             client.Send(exception);
@@ -31,7 +31,7 @@ namespace SharpBrake
         /// <returns>
         /// An <see cref="IEnumerable{AirbrakeResponseError}"/>.
         /// </returns>
-        internal static IEnumerable<AirbrakeResponseError> BuildErrors(this XmlReader reader)
+        internal static IEnumerable<AirbrakeResponseError> BuildErrors(XmlReader reader)
         {
             if (reader == null)
                 throw new ArgumentNullException("reader");
@@ -56,7 +56,7 @@ namespace SharpBrake
         /// <returns>
         /// A new instance of <see cref="AirbrakeResponseNotice"/>.
         /// </returns>
-        internal static AirbrakeResponseNotice BuildNotice(this XmlReader reader)
+        internal static AirbrakeResponseNotice BuildNotice(XmlReader reader)
         {
             if (reader == null)
                 throw new ArgumentNullException("reader");
@@ -109,7 +109,7 @@ namespace SharpBrake
         /// The value returned from <paramref name="getter"/> or <c>default(TResult)</c>
         /// if the invocation fails.
         /// </returns>
-        internal static TResult TryGet<TObject, TResult>(this TObject instance, Func<TObject, TResult> getter)
+        internal static TResult TryGet<TObject, TResult>(TObject instance, Func<TObject, TResult> getter)
         {
             try
             {

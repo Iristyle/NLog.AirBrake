@@ -85,6 +85,15 @@ information can be found [here][net-encrypt]
 
 ## Release Notes
 
+#### 0.4 - Warning clean up
+
+* Removed ExtensionAttribute class to resolve compiler warnings in .NET 4.0 projects 
+
+#### 0.3 - .NET 2.0/4.0
+
+* Target .Net 2.0 and 4.0
+* Removed NLog.config dependency
+
 #### 0.2 - .NET 3.5
 
 * Retargeted at .NET 3.5

@@ -41,12 +41,12 @@ namespace SharpBrake
             {
                 // TryGet is needed because the default behavior of WebResponse is to throw NotImplementedException
                 // when a method isn't overridden by a deriving class, instead of declaring the method as abstract.
-                this.contentLength = response.TryGet(x => x.ContentLength);
-                this.contentType = response.TryGet(x => x.ContentType);
-                this.headers = response.TryGet(x => x.Headers);
-                this.isFromCache = response.TryGet(x => x.IsFromCache);
-                this.isMutuallyAuthenticated = response.TryGet(x => x.IsMutuallyAuthenticated);
-                this.responseUri = response.TryGet(x => x.ResponseUri);
+                this.contentLength = Extensions.TryGet(response, x => x.ContentLength);
+                this.contentType = Extensions.TryGet(response, x => x.ContentType);
+                this.headers = Extensions.TryGet(response, x => x.Headers);
+                this.isFromCache = Extensions.TryGet(response, x => x.IsFromCache);
+                this.isMutuallyAuthenticated = Extensions.TryGet(response, x => x.IsMutuallyAuthenticated);
+                this.responseUri = Extensions.TryGet(response, x => x.ResponseUri);
             }
 
             try
@@ -155,11 +155,11 @@ namespace SharpBrake
                     switch (reader.LocalName)
                     {
                         case "errors":
-                            this.errors = new List<AirbrakeResponseError>(reader.BuildErrors()).ToArray();
+                            this.errors = new List<AirbrakeResponseError>(Extensions.BuildErrors(reader)).ToArray();
                             break;
 
                         case "notice":
-                            Notice = reader.BuildNotice();
+                            Notice = Extensions.BuildNotice(reader);
                             break;
                     }
                 }
