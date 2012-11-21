@@ -44,7 +44,14 @@ Task Package -Depends Compile, Test {
   $nuspec.package.metadata.version = $version
   $nuspec.Save($nuspecPath)
 
-  Publish-NugetPackage -Path $BuildOutDir -Force
+  if ($Env:NUGET_SOURCE)
+  {
+    Publish-NugetPackage -Path $BuildOutDir -Force
+  }
+  else
+  {
+    "No API key value found. Skipping Nuget publish."
+  }
 }
 
 Task Clean -Depends Init {
