@@ -13,5 +13,6 @@ namespace NLog.AirBrake
   {
     void Send(AirbrakeNotice notice);
     AirbrakeNotice BuildNotice(Exception ex);
+    AirbrakeNotice BuildNotice(AirbrakeError error);
   }
 }

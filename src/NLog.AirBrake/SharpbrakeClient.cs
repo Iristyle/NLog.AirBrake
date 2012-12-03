@@ -26,5 +26,10 @@ namespace NLog.AirBrake
     {
       return this.Builder.Notice(ex);
     }
+
+    public AirbrakeNotice BuildNotice(AirbrakeError error)
+    {
+        return this.Builder.Notice(error);
+    }
   }
 }
