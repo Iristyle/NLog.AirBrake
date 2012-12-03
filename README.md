@@ -85,6 +85,10 @@ information can be found [here][net-encrypt]
 
 ## Release Notes
 
+#### 0.5
+* Added support for using target without exceptions
+
+
 #### 0.2 - .NET 3.5
 
 * Retargeted at .NET 3.5
