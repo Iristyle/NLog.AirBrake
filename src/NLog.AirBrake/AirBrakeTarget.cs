@@ -39,7 +39,7 @@ namespace NLog.AirBrake
     /// <param name="logEvent">Logging event to be written out.</param>
     protected override void Write(LogEventInfo logEvent)
     {
-        var notice = (logEvent.Exception != null) ? SharpbrakeClient.BuildNotice(logEvent.Exception) : SharpbrakeClient.BuildNotice(logEvent.ToAirBrakeError());
+        var notice = (logEvent.Exception != null) ? SharpbrakeClient.BuildNotice(logEvent.Exception) : SharpbrakeClient.BuildNotice(ExtensionHolder.ToAirBrakeError(logEvent));
         // Override the notice message so we have the full exception
         // message, including the messages of the inner exceptions.
         // Also, include the log message, if it is set.
