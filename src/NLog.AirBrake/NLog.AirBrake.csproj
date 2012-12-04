@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -69,6 +69,7 @@
     <Compile Include="SharpBrake\AirbrakeResponse.cs" />
     <Compile Include="SharpBrake\AirbrakeResponseError.cs" />
     <Compile Include="SharpBrake\Extensions.cs" />
+    <Compile Include="LogEventInfoExtensions.cs" />
     <Compile Include="SharpBrake\RequestEndEventArgs.cs" />
     <Compile Include="SharpBrake\RequestEndEventHandler.cs" />
     <Compile Include="SharpBrake\Serialization\AirbrakeError.cs" />
