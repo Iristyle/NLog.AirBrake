@@ -39,18 +39,14 @@ namespace NLog.AirBrake
     /// <param name="logEvent">Logging event to be written out.</param>
     protected override void Write(LogEventInfo logEvent)
     {
-      if (logEvent.Exception != null)
-      {
-        AirbrakeNotice notice = this.SharpbrakeClient.BuildNotice(logEvent.Exception);
-
+        var notice = (logEvent.Exception != null) ? SharpbrakeClient.BuildNotice(logEvent.Exception) : SharpbrakeClient.BuildNotice(logEvent.ToAirBrakeError());
         // Override the notice message so we have the full exception
         // message, including the messages of the inner exceptions.
         // Also, include the log message, if it is set.
         string exceptionMessage = BuildExceptionMessage(logEvent.Exception);
-        notice.Error.Message = !string.IsNullOrEmpty(logEvent.Message) ? logEvent.Message + " " + exceptionMessage : exceptionMessage;
+        notice.Error.Message = !string.IsNullOrEmpty(logEvent.FormattedMessage) ? logEvent.FormattedMessage + " " + exceptionMessage : exceptionMessage;
 
         this.SharpbrakeClient.Send(notice);
-      }
     }
 
     private string BuildExceptionMessage(Exception ex)
@@ -69,6 +65,5 @@ namespace NLog.AirBrake
 
       return string.Join(" --> ", messages.ToArray());
     }
-
   }
 }
