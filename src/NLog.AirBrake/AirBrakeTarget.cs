@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NLog.Targets;
 using SharpBrake;
+using SharpBrake.Serialization;
 
 namespace NLog.AirBrake
 {
@@ -43,6 +44,16 @@ namespace NLog.AirBrake
         // Also, include the log message, if it is set.
         string exceptionMessage = BuildExceptionMessage(logEvent.Exception);
         notice.Error.Message = !string.IsNullOrEmpty(logEvent.FormattedMessage) ? logEvent.FormattedMessage + " " + exceptionMessage : exceptionMessage;
+
+        //Any LogEventInfo.Properties will be added to the Environment Tab.
+        var environmentProperties = new List<AirbrakeVar>(notice.Request.CgiData);
+        foreach (var property in logEvent.Properties)
+        {
+            AirbrakeVar prop = new AirbrakeVar(property.Key.ToString(), property.Value);
+            environmentProperties.Add(prop);
+        }
+
+        notice.Request.CgiData = environmentProperties.ToArray(); 
 
         this.SharpbrakeClient.Send(notice);
     }
