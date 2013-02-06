@@ -95,6 +95,11 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\logo-128.png" Condition="'$(TargetFrameworkVersion)' == 'v4.0'">
+      <Link>logo-128.png</Link>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <Target Name="CroMagVersion" Condition="$(DefineConstants.Contains('CROMAG'))" BeforeTargets="CoreCompile">
