@@ -39,9 +39,22 @@ Task Package -Depends Compile, Test {
   Copy-Item $sourceNuspec -Destination $nuspecPath
 
   $nuspec = [Xml](Get-Content $nuspecPath)
-  $compiled = Join-Path $BuildOutDir 'v2.0\NLog.AirBrake.dll'
-  $version = (Get-Command $compiled).FileVersionInfo.FileVersion
-  $nuspec.package.metadata.version = $version
+  $compiledV2 = Join-Path $BuildOutDir 'v2.0\NLog.AirBrake.dll'
+  $compiledV4 = Join-Path $BuildOutDir 'v4.0\NLog.AirBrake.dll'
+  $versionV2 = (Get-Command $compiledV2).FileVersionInfo.FileVersion
+  $versionV4 = (Get-Command $compiledV4).FileVersionInfo.FileVersion
+
+  if ($versionV2 -ne $versionV4)
+  {
+    throw ".NET 2 version [$versionV2] does not match .NET 4 version [$versionV4]"
+  }
+
+  if ((Get-Item $compiledV2).Length -eq (Get-Item $compiledV4).Length)
+  {
+    throw ".NET 2 and .NET 4 binaries cannot be equal size"
+  }
+
+  $nuspec.package.metadata.version = $versionV2
   $nuspec.Save($nuspecPath)
 
   Publish-NugetPackage -Path $BuildOutDir -Force
