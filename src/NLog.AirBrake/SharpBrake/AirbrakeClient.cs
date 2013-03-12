@@ -4,10 +4,8 @@ using System.IO;
 using System.Net;
 using System.Text;
 
-//using Common.Logging;
-
+using NLog.Common;
 using SharpBrake.Serialization;
-using NLog.AirBrake;
 
 namespace SharpBrake
 {
@@ -18,8 +16,7 @@ namespace SharpBrake
     {
         private readonly AirbrakeNoticeBuilder builder;
         private readonly AirbrakeConfiguration configuration;
-        //private readonly ILog log;
-
+        
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AirbrakeClient"/> class.
@@ -41,7 +38,6 @@ namespace SharpBrake
 
             this.configuration = configuration;
             this.builder = new AirbrakeNoticeBuilder(configuration);
-            //this.log = LogManager.GetLogger(GetType());
         }
 
 
@@ -73,7 +69,7 @@ namespace SharpBrake
         /// <param name="notice">The notice.</param>
         public void Send(AirbrakeNotice notice)
         {
-            //this.log.Debug(f => f("{0}.Send({1})", GetType(), notice));
+            InternalLogger.Debug("{0}.Send({1})", GetType(), notice);
 
             try
             {
@@ -83,7 +79,7 @@ namespace SharpBrake
                     // If none is set, just return... throwing an exception is pointless, since one was already thrown!
                     if (String.IsNullOrEmpty(ConfigurationManager.AppSettings["Airbrake.ApiKey"]))
                     {
-                        //this.log.Fatal("No 'Airbrake.ApiKey' found. Please define one in AppSettings.");
+                        InternalLogger.Fatal("No 'Airbrake.ApiKey' found. Please define one in AppSettings.");
                         return;
                     }
 
@@ -95,7 +91,7 @@ namespace SharpBrake
 
                 if (request == null)
                 {
-                    //this.log.Fatal(f => f("Couldn't create a request to '{0}'.", this.configuration.ServerUri));
+                    InternalLogger.Fatal("Couldn't create a request to '{0}'.", this.configuration.ServerUri);
                     return;
                 }
 
@@ -107,15 +103,18 @@ namespace SharpBrake
                 // It is important to set the method late... .NET quirk, it will interfere with headers set after
                 request.Method = "POST";
 
+                InternalLogger.Debug("Sending Airbrake notice to {0} with key {1}, env: {2}",
+                    this.configuration.ServerUri, this.configuration.ApiKey, this.configuration.EnvironmentName);
+                
                 // Go populate the body
                 SetRequestBody(request, notice);
 
                 // Begin the request, yay async
                 request.BeginGetResponse(RequestCallback, request);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //this.log.Fatal("An error occurred while trying to send to Airbrake.", exception);
+                InternalLogger.Fatal("An error occurred while trying to send to Airbrake: {0}", ex.Message);
             }
         }
 
@@ -124,7 +123,7 @@ namespace SharpBrake
         {
             if (response == null)
             {
-                //this.log.Fatal(f => f("No response received!"));
+                InternalLogger.Fatal("No response received!");
                 return;
             }
 
@@ -138,7 +137,7 @@ namespace SharpBrake
                 using (var sr = new StreamReader(responseStream))
                 {
                     responseBody = sr.ReadToEnd();
-                    //this.log.Debug(f => f("Received from Airbrake.\n{0}", responseBody));
+                    InternalLogger.Debug("Received from Airbrake.\n{0}", responseBody);
                 }
             }
 
@@ -152,18 +151,14 @@ namespace SharpBrake
 
         private void RequestCallback(IAsyncResult result)
         {
-            //this.log.Debug(f => f("{0}.RequestCallback({1})", GetType(), result));
+            InternalLogger.Trace("{0}.RequestCallback({1})", GetType(), result);
 
             // Get it back
             var request = result.AsyncState as HttpWebRequest;
 
             if (request == null)
             {
-                //this.log.Fatal(
-                //    f => f(
-                //        "{0}.AsyncState was null or not of type {1}.",
-                //        typeof(IAsyncResult),
-                //        typeof(HttpWebRequest)));
+                InternalLogger.Fatal("{0}.AsyncState was null or not of type {1}.", typeof(IAsyncResult), typeof(HttpWebRequest));
                 return;
             }
 
@@ -177,7 +172,9 @@ namespace SharpBrake
             catch (WebException exception)
             {
                 // Since an exception was already thrown, allowing another one to bubble up is pointless
-                //this.log.Fatal("An error occurred while retrieving the web response", exception);
+                InternalLogger.Fatal("An error occurred while retriving the Airbrake web response: {0}, web response: {1}",
+                    exception.Message, exception.Response);
+
                 response = exception.Response;
             }
 
@@ -190,7 +187,7 @@ namespace SharpBrake
             var serializer = new CleanXmlSerializer<AirbrakeNotice>();
             string xml = serializer.ToXml(notice);
 
-            //this.log.Debug(f => f("Sending the following to '{0}':\n{1}", request.RequestUri, xml));
+            InternalLogger.Trace("Sending the following to {0}: {1}", request.RequestUri, xml);
 
             byte[] payload = Encoding.UTF8.GetBytes(xml);
             request.ContentLength = payload.Length;
