@@ -151,7 +151,7 @@ namespace SharpBrake
 
         private void RequestCallback(IAsyncResult result)
         {
-            InternalLogger.Trace("{0}.RequestCallback({1})", GetType(), result));
+            InternalLogger.Trace("{0}.RequestCallback({1})", GetType(), result);
 
             // Get it back
             var request = result.AsyncState as HttpWebRequest;
