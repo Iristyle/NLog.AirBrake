@@ -40,5 +40,26 @@ namespace NLog.AirBrake.Tests
       logger.Info("no exception with this one.");
       A.CallTo(() => client.Send(A<AirbrakeNotice>.Ignored)).MustNotHaveHappened();
     }
+
+    [Fact]
+    public void AirBrakeTarget_InnerException_CreateBackTrace()
+    {
+        AirBrakeTarget target = new AirBrakeTarget();
+        NLog.Config.SimpleConfigurator.ConfigureForTargetLogging(target);
+        try
+        {
+            new InnerExceptionTestHelper().ThrowException();
+        }
+        catch(Exception ex)
+        {
+            List<AirbrakeTraceLine> traceLines = new List<AirbrakeTraceLine>();
+            if (ex.InnerException != null)
+            {
+                traceLines = target.GetBackTraceLines(ex, 1);
+            }
+            Assert.True(traceLines.Count == 12);
+        }
+        
+    }
   }
 }
