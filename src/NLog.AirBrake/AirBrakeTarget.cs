@@ -72,9 +72,21 @@ namespace NLog.AirBrake
 
             int lineNumber = frame.GetFileLineNumber();
             lines.Add(new AirbrakeTraceLine("---- INNER EXCEPTION ----", 0));
+
             if (lineNumber == 0)
             {
                 lineNumber = frame.GetILOffset();
+            }
+
+            if (lineNumber == -1)
+            {
+                lineNumber = frame.GetNativeOffset();
+            }
+
+            // AirBrake doesn't allow for negative line numbers which can happen with lambdas
+            if (lineNumber < 0)
+            {
+                lineNumber = 0;
             }
 
             string file = frame.GetFileName();
