@@ -57,7 +57,8 @@ namespace NLog.AirBrake.Tests
             {
                 traceLines = target.GetBackTraceLines(ex, 1);
             }
-            Assert.True(traceLines.Count == 12);
+
+            Assert.Equal(10, traceLines.Count);
         }
         
     }

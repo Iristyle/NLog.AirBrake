@@ -7,16 +7,11 @@ namespace NLog.AirBrake.Tests
 {
     public class InnerExceptionTestHelper
     {
-        public void ThrowException1()
-        {
-            throw new Exception("Ex1");
-        }
-
         public void ThrowException()
         {
             try
             {
-                ThrowException1();
+                throw new Exception("Ex1");
             }
             catch (Exception e)
             {
@@ -35,7 +30,5 @@ namespace NLog.AirBrake.Tests
         {
             throw new Exception("Ex2", e);
         }
-
-
     }
 }
