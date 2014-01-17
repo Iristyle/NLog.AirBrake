@@ -85,14 +85,14 @@ information can be found [here][net-encrypt]
 
 ## Release Notes
 
+#### 0.7
+* Updated NLog versions from 2.0.1.2 to 2.1.0.0
+
 #### 0.6
 * Updated NLog versions from 2.0.0.2000 to 2.0.1.2
 
-
-
 #### 0.5
 * Added support for using target without exceptions
-
 
 #### 0.2 - .NET 3.5
 

@@ -40,10 +40,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NLog" Condition="'$(TargetFrameworkVersion)' == 'v2.0'">
-      <HintPath>..\packages\NLog.2.0.1.2\lib\net20\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.2.1.0\lib\net20\NLog.dll</HintPath>
     </Reference>
     <Reference Include="NLog" Condition="'$(TargetFrameworkVersion)' == 'v4.0'">
-      <HintPath>..\packages\NLog.2.0.1.2\lib\net40\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.2.1.0\lib\net40\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" Condition="'$(TargetFrameworkVersion)' == 'v4.0'" />
