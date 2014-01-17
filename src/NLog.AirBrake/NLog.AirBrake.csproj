@@ -39,11 +39,12 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NLog" Condition="'$(TargetFrameworkVersion)' == 'v2.0'">
-      <HintPath>..\packages\NLog.2.0.1.2\lib\net20\NLog.dll</HintPath>
-    </Reference>
     <Reference Include="NLog" Condition="'$(TargetFrameworkVersion)' == 'v4.0'">
       <HintPath>..\packages\NLog.2.0.1.2\lib\net40\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NLog.2.1.0\lib\net20\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" Condition="'$(TargetFrameworkVersion)' == 'v4.0'" />
