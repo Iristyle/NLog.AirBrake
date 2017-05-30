@@ -8,10 +8,16 @@ namespace NLog.AirBrake
 {
   public class SharpbrakeClient : ISharpbrakeClient
   {
-    public SharpbrakeClient(AirbrakeClient client, AirbrakeNoticeBuilder builder)
+    public SharpbrakeClient()
     {
       this.Client = new AirbrakeClient();
       this.Builder = new AirbrakeNoticeBuilder();
+    }
+    
+    public SharpbrakeClient(AirbrakeClient client, AirbrakeNoticeBuilder builder)
+    {
+      this.Client = client;
+      this.Builder = builder;
     }
 
     private AirbrakeClient Client { get; set; }
